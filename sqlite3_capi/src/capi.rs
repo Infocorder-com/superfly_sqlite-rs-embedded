@@ -35,9 +35,10 @@ pub use crate::bindings::{
 mod aliased {
     #[cfg(feature = "static")]
     pub use crate::bindings::{
-        sqlite3_bind_blob as bind_blob, sqlite3_bind_double as bind_double,
-        sqlite3_bind_int as bind_int, sqlite3_bind_int64 as bind_int64,
-        sqlite3_bind_null as bind_null, sqlite3_bind_parameter_count as bind_parameter_count,
+        sqlite3_aggregate_context as aggregate_context, sqlite3_bind_blob as bind_blob,
+        sqlite3_bind_double as bind_double, sqlite3_bind_int as bind_int,
+        sqlite3_bind_int64 as bind_int64, sqlite3_bind_null as bind_null,
+        sqlite3_bind_parameter_count as bind_parameter_count,
         sqlite3_bind_parameter_index as bind_parameter_index,
         sqlite3_bind_parameter_name as bind_parameter_name, sqlite3_bind_pointer as bind_pointer,
         sqlite3_bind_text as bind_text, sqlite3_bind_value as bind_value,
@@ -639,4 +640,8 @@ pub fn vtab_distinct(index_info: *mut index_info) -> c_int {
 
 pub fn get_autocommit(db: *mut sqlite3) -> c_int {
     unsafe { invoke_sqlite!(get_autocommit, db) }
+}
+
+pub fn aggregate_context(ctx: *mut context, n_bytes: c_int) -> *mut c_void {
+    unsafe { invoke_sqlite!(aggregate_context, ctx, n_bytes) }
 }
