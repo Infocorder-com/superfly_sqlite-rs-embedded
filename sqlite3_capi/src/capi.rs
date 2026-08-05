@@ -57,9 +57,10 @@ mod aliased {
         sqlite3_errcode as errcode, sqlite3_errmsg as errmsg, sqlite3_error_offset as error_offset,
         sqlite3_exec as exec, sqlite3_finalize as finalize, sqlite3_free as free,
         sqlite3_get_autocommit as get_autocommit, sqlite3_get_auxdata as get_auxdata,
-        sqlite3_libversion as libversion, sqlite3_libversion_number as libversion_number,
-        sqlite3_malloc as malloc, sqlite3_malloc64 as malloc64, sqlite3_next_stmt as next_stmt,
-        sqlite3_open as open, sqlite3_prepare_v2 as prepare_v2, sqlite3_prepare_v3 as prepare_v3,
+        sqlite3_last_insert_rowid as last_insert_rowid, sqlite3_libversion as libversion,
+        sqlite3_libversion_number as libversion_number, sqlite3_malloc as malloc,
+        sqlite3_malloc64 as malloc64, sqlite3_next_stmt as next_stmt, sqlite3_open as open,
+        sqlite3_prepare_v2 as prepare_v2, sqlite3_prepare_v3 as prepare_v3,
         sqlite3_randomness as randomness, sqlite3_reset as reset,
         sqlite3_result_blob as result_blob, sqlite3_result_double as result_double,
         sqlite3_result_error as result_error, sqlite3_result_error_code as result_error_code,
@@ -164,6 +165,10 @@ pub fn bind_blob(
 
 pub fn changes64(db: *mut sqlite3) -> int64 {
     unsafe { invoke_sqlite!(changes64, db) }
+}
+
+pub fn last_insert_rowid(db: *mut sqlite3) -> int64 {
+    unsafe { invoke_sqlite!(last_insert_rowid, db) }
 }
 
 pub fn shutdown() -> c_int {
