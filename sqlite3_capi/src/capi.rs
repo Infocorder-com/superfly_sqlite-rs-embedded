@@ -643,6 +643,18 @@ pub fn vtab_distinct(index_info: *mut index_info) -> c_int {
     unsafe { invoke_sqlite!(vtab_distinct, index_info) }
 }
 
+/// The collating sequence SQLite will use for constraint `i` of `index_info`.
+///
+/// Returns the raw `const char*` from the C API, faithful to
+/// `sqlite3_vtab_collation()`: a collation name such as `BINARY` or `NOCASE`,
+/// or NULL when `i` is out of range. A vtab that pushes an equality
+/// constraint down into its own SQL needs this -- the pushed-down comparison
+/// runs under whatever collation that SQL implies, which is only correct if
+/// it matches the collation SQLite would otherwise have applied.
+pub fn vtab_collation(index_info: *mut index_info, i: c_int) -> *const c_char {
+    unsafe { invoke_sqlite!(vtab_collation, index_info, i) }
+}
+
 pub fn get_autocommit(db: *mut sqlite3) -> c_int {
     unsafe { invoke_sqlite!(get_autocommit, db) }
 }
